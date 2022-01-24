@@ -20,7 +20,27 @@ void push(Node** head_ref, int new_key )
     (*head_ref) = new_node; // all the nodes created are linked together using this.
 
 }
+void printList(Node* n)
+{
+    while (n != NULL) {
+        cout << n->key << " ";
+        n = n->next;
+    }
+}
 
+bool search(Node* c, int s)
+{
+    Node* current = c;
+    while(current!=NULL)
+    {
+        if(current->key==s)
+        {return true;}
+        current = current-> next;
+
+    }
+    return false;
+    
+}
 
 int main()
 {
@@ -30,12 +50,18 @@ int main()
  
     /* Use push() to construct below list
     14->21->11->30->10 */
-    //As clearly visible, enter the code in a descending order.
+    //As clearly visible, enter the code in a reverse order of the linked list.
     push(&head, 10);
     push(&head, 30);
     push(&head, 11);
     push(&head, 21);
     push(&head, 14);
+
+    printList(head); //we dont have to put & because head already stores an address and we don't want to pass the address
+   // of 'head' as the parameter. But intead we wanna pass the address it stores.
+
+    cout<<endl;
+    search(head,x) ? cout<<"Yes" : cout<<"No";
 
     return 0;
 }
