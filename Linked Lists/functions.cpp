@@ -11,16 +11,17 @@ Node* next;
 };
 
 void push(Node** head_ref,int new_key ){
-
+//we pass a reference to head so as to not change the position of head
 Node* new_node = new Node();
 
 new_node->key=new_key;
 new_node->next=(*head_ref);
-
 (*head_ref) = new_node;
 }
 
-void print(Node* n)
+void print(Node* n) 
+//this function will work the from start to end, iff
+//you dont change the head from the first node to some other node
 {
     while(n!=NULL)
     {
@@ -33,7 +34,7 @@ void print(Node* n)
 void insertBeginning(Node** head_ref, int n)
 {
   Node* new_node = new Node();
-     
+
     new_node->key=n;
     new_node->next=(*head_ref);
     (*head_ref) = new_node;
@@ -41,23 +42,62 @@ void insertBeginning(Node** head_ref, int n)
 }
 void insertEnd(Node** head_ref, int n)
 {
-  Node* new_node = new Node();
-     
-    new_node->key=n;
-    new_node->next=(*head_ref);
-    (*head_ref) = new_node;
+  Node* new_add = new Node();
   
+  //add data to the node we want to add
+  new_add->key=n;
+  //This new node is going to be the last node, 
+  //so make next of  it as NULL
+  new_add->next=NULL;
+
+  Node* last = new Node();
+  last = (*head_ref) ;
+
+//If the Linked List is empty, then make the new node as head
+    
+  if(last==NULL)
+  {
+    last = new_add;
+    return; //this return helps the user break out of the function.
+    //and this way 'return' can only be used in 'void' type functions
+  }
+// Else traverse till the last node
+  while(last->next!=NULL)
+  {
+    last=last->next; //keeps shifting to the next node;
+    
+  }
+// then Change the next of last node to the node we wantedd to add.     
+    last->next=new_add;
+    return;
 }
 
+void insertBetween(Node* prev_node,int n)
+{
+  // 1. Check if the given prev_node is NULL
+    if (prev_node == NULL) 
+    { 
+        cout << "The given previous node cannot be NULL"; 
+        return; 
+    }
+
+  Node* new_node = new Node();
+  new_node->key=n;
+
+  // 4. Make next of new node as next of prev_node
+    new_node->next = prev_node->next; 
+  // 5. move the next of prev_node as new_node
+    prev_node->next = new_node; 
+}
 int main()
 {
     Node* head = NULL;
     //2 4 6 8 10
-    push(&head,10);
-    push(&head,8);
-    push(&head,6);
-    push(&head,4);
     push(&head,2);
+    push(&head,6);
+    push(&head,10);
+    push(&head,4);
+    push(&head,8);
 
     print(head);
 
@@ -65,6 +105,12 @@ int main()
 
     insertBeginning(&head,9);
 
+    print(head);
+    cout<<endl;
+    insertEnd(&head,45);
+    print(head);
+    cout<<endl;
+    insertBetween(head->next->next->next,78);
     print(head);
 
     return 0;
