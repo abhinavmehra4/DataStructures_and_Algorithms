@@ -91,10 +91,8 @@ int main()
 
     printList(head);
     sortLinkedList(&head);
-    cout<<"hey";
     cout<<endl;
     printList(head);
-    cout<<"hey";
 
     
     return 0;
