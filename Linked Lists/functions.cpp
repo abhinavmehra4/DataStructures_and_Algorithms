@@ -101,7 +101,7 @@ void sortLinkedList(Node** head_ref) {
   current = (*head_ref);
   index = NULL;
   int temp;
-
+  
   if (head_ref == NULL) {
   return;
   } else {
