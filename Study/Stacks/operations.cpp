@@ -20,7 +20,12 @@ public:
                 else
                 {
                     a[++top]=x; //Since value of top is same as index of the array
-                    //in the above step, value was stored in the stack as well as an increment in the value of top took place.
+                    //in the above step, value was stored in the stack as well as an increment in the value of
+                    // top took place.
+    
+    //The important thing to know is that here, value of top is incremented first, then the value is assigned.
+
+
                     cout<< x <<" was pushed into the stack\n";
                     return true;
                 }
@@ -39,6 +44,9 @@ public:
                 else
                 {
                     int x = a[top--]; //simultaneously value of top is decreased.
+
+//The important thing to know is that first the value to popped is assigned and then the pointer value is reduced
+
                     return x;
                 }
             }
