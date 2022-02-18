@@ -20,7 +20,7 @@ class queue{
 
 
     bool isEmpty()
-    {
+    {   //because when a queue has its first element, front becomes 0.
         if(front==-1)
         return true;
         else
@@ -40,12 +40,12 @@ class queue{
         items[rear]=x;
     }
 
-    int dequeue()
+    void dequeue()
     {   int element;
         if(isEmpty())
         {
             cout<<"Queue is empty\n";
-            return -1;
+            //return -1;
         }
 
         else
@@ -62,7 +62,7 @@ class queue{
                 front++;
             }
             cout<<endl<<"The deleted element is "<<element<<endl;
-            return element;
+            //return element;
         }
     }
 
