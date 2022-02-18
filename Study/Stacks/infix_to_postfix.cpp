@@ -3,13 +3,47 @@
 #include<string.h>
 using namespace std;
 
-#define MAX 100 
+#define MAX 100
 
 //these are globally declared as everyunction can use them
 char stack[MAX]; //to store the whole postfix expression
 char infix[MAX]; //infix to store the expression
 char postfix[MAX];
 int top=-1;//indicates the index of the topmost element of the stack;
+
+void push(int symbol)
+{
+    if(top>=MAX-1)
+    {
+        cout<<"Stack overflow\n";
+        return;
+    }
+    stack[top++]=symbol;
+}
+
+int pop()
+{
+    if(top<0)
+    {
+        cout<<"Stack underflow\n";
+        return 0;
+    }
+    else
+    return stack[top--];
+    
+}
+
+int isEmpty()
+{
+    if (top<0)
+    {
+        return 1;
+    }
+    else
+    return 0;
+    
+}
+
 int precedence(char symbol)
 {
     switch(symbol)
@@ -54,11 +88,13 @@ void inToPost()
             case '*':
             case '/':
             case '^':
-                while(!isEmpty()&&(precedence(stack[top])>precedence(symbol)))
+                while(!isEmpty()&&(precedence(stack[top])>=precedence(symbol)))
                 {
                     postfix[j]=pop();
                     j++;
                 }
+                push(symbol);
+                break;
         default:
         //if the symbol is an operand, we simply put the operand in the postfix array
         {
@@ -76,6 +112,13 @@ void inToPost()
         postfix[j]='\0';
     }
 }
+void print(int n)
+{
+    for(int i =0;i<n;i++)
+    {
+        cout<<postfix[i];
+    }
+}
 int main()
 {
     //get the expression from the user
@@ -84,6 +127,8 @@ int main()
 
     //call the function to convert infix to postfix
     inToPost();
+    int n =sizeof(postfix)/sizeof(postfix[0]);
+    print(n);
     
     return 0;
 }
