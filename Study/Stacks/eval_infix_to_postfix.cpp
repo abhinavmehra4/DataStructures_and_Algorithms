@@ -1,11 +1,10 @@
-//the following code is for the expressions without whitespaces
 #include<iostream>
 #include<string.h>
 using namespace std;
 
 #define MAX 100
 
-//these are globally declared as everyunction can use them
+//these are globally declared as every function can use them
 char stack[MAX]; //to store the whole postfix expression
 char infix[MAX]; //infix to store the expression
 char postfix[MAX];
@@ -31,7 +30,6 @@ int pop()
     }
     else
     return stack[top--];
-    
 }
 
 int isEmpty()
@@ -42,7 +40,6 @@ int isEmpty()
     }
     else
     return 0;
-    
 }
 
 int precedence(char symbol)
@@ -66,8 +63,7 @@ void inToPost()
     char symbol,next;
     int i,j=0;
     for(i=0;i<strlen(infix);i++)
-    {
-        symbol = infix[i];
+    {   symbol = infix[i];
         //in the algo, there are many if else cases, hence it is better to just use a switch case syntax
         switch (symbol)
         {
@@ -101,7 +97,6 @@ void inToPost()
             postfix[j]=symbol;
             j++;
         }
-        
         }
     }
     //we must check if the while stack is empty or not. It is an important thing to do
@@ -114,12 +109,6 @@ void inToPost()
 }
 void print()
 {
-    // int i=0;
-    // while (postfix[i])
-    // {
-    //     printf("%c",postfix[i++]);
-    // }
-    // cout<<endl;
     for(int i=0;i<sizeof(postfix)/sizeof(postfix[0]);i++)
     {
         cout<<postfix[i];
@@ -127,6 +116,43 @@ void print()
     cout<<endl;
     
 }
+
+float post_eval()
+{
+    int i,a,b;
+    for( i=0;i<strlen(postfix);i++)
+    {
+        //because we are comparing the characters and not the numbers, we are
+        //actually comparing the ASCII codes of 0-9
+        if(postfix[i] >= '0' && postfix[i] <= '9')
+        {
+            push(postfix[i]-'0');
+        }
+        else
+        {
+            a=pop();
+            b=pop();
+            //we have to do b-a
+            switch (postfix[i])
+            {
+            case '+':
+                    push(b+a); break;
+             case '*':
+                    push(b*a); break;
+             case '/':
+                    push(b/a);break;
+             case '-':
+                    push(b-a);break;
+             case '^':
+                    push(b^a);break;
+            }
+        }
+    }
+    return pop();
+}
+    
+
+
 int main()
 {
     //get the expression from the user
@@ -137,7 +163,10 @@ int main()
     inToPost();
  //   int n =sizeof(postfix)/sizeof(postfix[0]);
     print();
-    
+    cout<<endl;
+    float result;
+    result = post_eval();
+    cout<<endl;
+    cout<<"The output of the postfix expression is\n"<<result;
     return 0;
 }
-//7+3-5*(4/2)
