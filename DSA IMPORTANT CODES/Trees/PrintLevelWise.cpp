@@ -17,50 +17,58 @@ class TreeNode{
             for (int i = 0; i < children.size(); i++) {
                 delete children[i];
             }
+}
 };
 
 //Function to tak elevel wise input
 TreeNode<int>* takeInputLevelWise()
-{
+{   
     int rootData;
-    cout<<"Enter the root data\n";
+    cout<<"Enter root data "<<endl;
     cin>>rootData;
-    TreeNode<int>* root = new TreeNode<int>(rootData);
-
-    queue<TreeNode<int>*> pendingNodes;
-    pendingNodes.push(root);
+    TreeNode<int>* root = new TreeNode<int>(rootData); //we created the root node
+   queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root); //push the pparent node inside
     while(pendingNodes.size()!=0)
     {
-        TreeNode<int>* frontNode = pendingNodes.front();
-        pendingNodes.pop();
+        TreeNode<int>* front = pendingNodes.front(); //we get the topmost element of the queue using front()
+        pendingNodes.pop(); //topmost queue element gets popped
+        cout<<"Enter the number of children of "<<front->data<<endl;
         int numChild;
-        cout<<"Enter the number of children "<<endl;
         cin>>numChild;
-        for(int i =0;i<numChild;i++)
+        for(int i=0;i<numChild;i++)
         {
+            cout<<"Enter "<<i<<"th child of "<<front->data<<endl;
             int childData;
-            cout<<"Enter the data for "<<numChild<<endl;
             cin>>childData;
             TreeNode<int>* child = new TreeNode<int>(childData);
             front->children.push_back(child);
-            pendingNode.push(child);
+            pendingNodes.push(child);
         }
+
     }
-    
     return root;
 }
-
 void printLevelWise(TreeNode<int>* root)
 {
     if(root==NULL)
         return;
+
+    cout<<root->data<<":";
+    for(int i =0;i<root->children.size();i++)
+    {
+        cout<<root->children[i]->data<<",";
+    }
+        cout<<endl;
+    for(int i =0;i<root->children.size();i++)
+    {
+        printLevelWise(root->children[i]);
+    }
 }
 
 int main()
 {
     TreeNode<int>* root = takeInputLevelWise();
     printLevelWise(root);
-
-
-return 0;
+    return 0;
 }
