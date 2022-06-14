@@ -61,18 +61,20 @@ void printTree(TreeNode<int>* root)
      }
 }
 
-
-int sumOfNodes(TreeNode<int>* root) //to calculate the sum of the nodes
+void printAtLevel(TreeNode<int>* root, int k)
 {
-    if(root==NULL)
-        return 0;
-    int sum = root->data;
-    for(int i =0;i<root->children.size();i++)
+    if (root==NULL) //edge case
+        return;
+    if(k==0)
+        cout<<root->data<<endl;
+
+    for(int i=0;i<root->children.size();i++)
     {
-        sum+=sumOfNodes(root->children[i]);
+        printAtLevel(root->children[i],k-1);
     }
-    return sum;
+    
 }
+
 void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
 {
     for(int i =0;i<root->children.size();i++)
@@ -81,12 +83,13 @@ void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
     }
     delete root;
 }
-
 int main()
 {
+    //1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0  Give inputs like this. It will be
     TreeNode<int>* root = takeInputLevelWise();
     printTree(root);
     cout<<endl;
-    cout << sumOfNodes(root);
+    cout<<"Level 2:"<<endl;
+    printAtLevel(root,2);
     return 0;
 }

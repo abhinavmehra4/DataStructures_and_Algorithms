@@ -1,8 +1,10 @@
 #include<iostream>
 #include "TreeNode.h"
-#include<vector>
 #include<queue>
+#include<vector>
+
 using namespace std;
+
 TreeNode<int>* takeInputLevelWise()
 {   
     int rootData;
@@ -61,18 +63,28 @@ void printTree(TreeNode<int>* root)
      }
 }
 
-
-int sumOfNodes(TreeNode<int>* root) //to calculate the sum of the nodes
+void preorder(TreeNode<int>* root)
 {
-    if(root==NULL)
-        return 0;
-    int sum = root->data;
+    if(root==NULL) //edge case and not the base case
+        return;
+    cout<<root->data<<" ";
     for(int i =0;i<root->children.size();i++)
     {
-        sum+=sumOfNodes(root->children[i]);
+        preorder(root->children[i]);
     }
-    return sum;
 }
+
+void postorder(TreeNode<int>* root)
+{
+    if(root==NULL)
+        return;
+    for(int i =0;i<root->children.size();i++)
+    {
+        postorder(root->children[i]);
+    }
+    cout<<root->data<<" ";
+}
+
 void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
 {
     for(int i =0;i<root->children.size();i++)
@@ -84,9 +96,16 @@ void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
 
 int main()
 {
+    //1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0  Give inputs like this. It will be
     TreeNode<int>* root = takeInputLevelWise();
     printTree(root);
     cout<<endl;
-    cout << sumOfNodes(root);
+    preorder(root);
+    cout<<endl;
+    postorder(root);
+
+    //DELETE THE TREE
+    deleteTree(root);
+    //or do delete root; but for this we need a destructor
     return 0;
 }

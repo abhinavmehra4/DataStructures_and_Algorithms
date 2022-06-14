@@ -61,18 +61,25 @@ void printTree(TreeNode<int>* root)
      }
 }
 
-
-int sumOfNodes(TreeNode<int>* root) //to calculate the sum of the nodes
+int getLeafNodeCount(TreeNode<int>* root)
 {
     if(root==NULL)
         return 0;
-    int sum = root->data;
-    for(int i =0;i<root->children.size();i++)
+    int ans=0;
+    /*
+    dont do 
+    int ans=1; because every time recursion is cfalled, the value of answer will be set to 1 and the code will 
+    become same as calculating the number of nodes
+
+    */
+    if(root->children.size()==0)
+        return 1;
+    for(int i=0;i<root->children.size();i++)
     {
-        sum+=sumOfNodes(root->children[i]);
+        ans+=getLeafNodeCount(root->children[i]);
     }
-    return sum;
 }
+
 void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
 {
     for(int i =0;i<root->children.size();i++)
@@ -81,12 +88,10 @@ void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
     }
     delete root;
 }
-
 int main()
 {
     TreeNode<int>* root = takeInputLevelWise();
     printTree(root);
     cout<<endl;
-    cout << sumOfNodes(root);
     return 0;
 }

@@ -61,18 +61,17 @@ void printLevelWise(TreeNode<int>* root) //this printing is using iterative meth
         TreeNode<int>* frontNode = pendingPrints.front();
         pendingPrints.pop();
         cout<<frontNode->data<<":";
-        for(int i=0;i<root->children.size();i++)
+        for(int i=0;i<frontNode->children.size();i++)
         {
             if(i==frontNode->children.size()-1)
             {
-                cout<<root->children[i]->data;    
+                cout<<frontNode->children[i]->data;    
             }
             else{
-                cout<<root->children[i]->data<<",";
+                cout<<frontNode->children[i]->data<<",";
             }
             
-            pendingPrints.push(root->children[i]);
-            cout<<root->children[i]->data<<",";
+            pendingPrints.push(frontNode->children[i]);
         }
         cout<<endl;
     }
