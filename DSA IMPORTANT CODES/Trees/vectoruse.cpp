@@ -46,6 +46,7 @@ int main()
     
     cout<<v.at(0)<<endl<<v.at(1)<<endl<<v.at(2)<<endl<<v.at(3)<<endl<<v.at(4)<<endl<<v.at(5)<<endl;
     //at the 4th and 5th index since we have no element, we get an error. Hence at() is much much safer to use
+    //but after this error, no other code will be executed as an exit() is initiated
 
 
     return 0;

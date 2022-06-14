@@ -49,20 +49,32 @@ TreeNode<int>* takeInputLevelWise()
     }
     return root;
 }
-void printLevelWise(TreeNode<int>* root)
+void printLevelWise(TreeNode<int>* root) //this printing is using iterative method to avoid comma use
 {
     if(root==NULL)
         return;
 
-    cout<<root->data<<":";
-    for(int i =0;i<root->children.size();i++)
+    queue<TreeNode<int>*> pendingPrints;
+    pendingPrints.push(root);
+    while(pendingPrints.size()!=0)
     {
-        cout<<root->children[i]->data<<",";
-    }
+        TreeNode<int>* frontNode = pendingPrints.front();
+        pendingPrints.pop();
+        cout<<frontNode->data<<":";
+        for(int i=0;i<root->children.size();i++)
+        {
+            if(i==frontNode->children.size()-1)
+            {
+                cout<<root->children[i]->data;    
+            }
+            else{
+                cout<<root->children[i]->data<<",";
+            }
+            
+            pendingPrints.push(root->children[i]);
+            cout<<root->children[i]->data<<",";
+        }
         cout<<endl;
-    for(int i =0;i<root->children.size();i++)
-    {
-        printLevelWise(root->children[i]);
     }
 }
 
