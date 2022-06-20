@@ -46,7 +46,7 @@ BinaryTreeNode<int>* takeInputLevelWise()
     int rootData;
     cout<<"Enter root data "<<endl;
     cin>> rootData;
-    if(rootData==-1)
+    if(rootData==-1) //this corresponds to a NULL binary tree
         return NULL;
     BinaryTreeNode<int>* root = new BinaryTreeNode<int>(rootData);
     queue<BinaryTreeNode<int>*> pendingNodes;
@@ -54,11 +54,7 @@ BinaryTreeNode<int>* takeInputLevelWise()
     while(pendingNodes.size()!=0)
     {
         BinaryTreeNode<int>* front = pendingNodes.front();
-        pendingNodes.pop();
-        // cout<<"Enter the number of children of "<<front->data<<endl;
-        // int numChild;
-        // cin>>numChild;
-        
+        pendingNodes.pop();    
             int leftChildData;
             cout<<"Enter the left child of "<<front->data<<endl;
             cin>>leftChildData;

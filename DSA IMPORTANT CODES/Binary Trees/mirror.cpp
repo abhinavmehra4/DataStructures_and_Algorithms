@@ -41,44 +41,53 @@ BinaryTreeNode<int>* takeInputLevelWise()
     }
     return root;
 }                                                 
-void printLevelWise(BinaryTreeNode<int> *root) {
-	// Write your code here
-    if(root==NULL) //Edeg case
-        return;
-    queue<BinaryTreeNode<int>*> pendingPrints;
-    pendingPrints.push(root);
-    while(pendingPrints.size()!=0)
-    {
-        BinaryTreeNode<int>* front = pendingPrints.front();
-        pendingPrints.pop();
-        cout<<front->data<<":";
-        if(front->left!=NULL)
-        {
-            cout<<"L:"<<front->left->data;
-            pendingPrints.push(front->left);
+
+void printLevelATNewLine(BinaryTreeNode<int> *root) {
+    queue<BinaryTreeNode<int> *> q;
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty()) {
+        BinaryTreeNode<int> *first = q.front();
+        q.pop();
+        if (first == NULL) {
+            if (q.empty()) {
+                break;
+            }
+            cout << endl;
+            q.push(NULL);
+            continue;
         }
-        else if(front->left==NULL)
-        {
-            cout<<"L:"<<-1;
+        cout << first->data << " ";
+        if (first->left != NULL) {
+            q.push(first->left);
         }
-        if(front->right!=NULL)
-        {
-            cout<<",R:"<<front->right->data;
-            pendingPrints.push(front->right);
+        if (first->right != NULL) {
+            q.push(first->right);
         }
-        else if(front->right==NULL)
-        {
-            cout<<",R:"<<-1;
-        }
-        cout<<endl;
     }
 }
 
-int main()
+void mirrorBinaryTree(BinaryTreeNode<int>* root)
 {
+    if(root==NULL)
+        return;
+    mirrorBinaryTree(root->left);
+    mirrorBinaryTree(root->right);
+    BinaryTreeNode<int>* temp = root->left;                                                       
+    root->left=root->right;
+    root->right = temp;
+    
+}
+
+int main()                          
+{   // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
     BinaryTreeNode<int>* root = takeInputLevelWise();
-    printLevelWise(root);
+    printLevelATNewLine(root);
+    mirrorBinaryTree(root);
+    cout<<endl<<"Mirrored Binary Tree "<<endl;
+    printLevelATNewLine(root);
     delete root;
 }
 
 
+                                                                                                                                                                                                                                                                 

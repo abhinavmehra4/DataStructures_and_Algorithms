@@ -28,7 +28,7 @@ Bu this will not be good because, evetually this function will try to print a ro
     }
     if(root->right)
     {
-        cout<<"R:"<<root->right->data;
+        cout<<"R"<<root->right->data;
     }
     cout<<endl; //for moving on to the next subtree
     printTree(root->left);
