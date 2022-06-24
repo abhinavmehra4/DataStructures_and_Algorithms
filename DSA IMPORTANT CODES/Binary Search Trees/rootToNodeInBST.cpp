@@ -2,6 +2,8 @@
 #include "BinaryTreeNode.h"
 #include<queue>
 #include<vector>
+#include<algorithm>
+#include<climits>
 using namespace std;
 
 BinaryTreeNode<int>* takeInputLevelWise()
@@ -74,38 +76,55 @@ void printLevelWise(BinaryTreeNode<int> *root) {
     }
 }
 
-int numNodes(BinaryTreeNode<int>* root)
-{
-    if(root==NULL)
-        return 0;
-    return 1 + ( numNodes(root->left) + numNodes(root->right));
-    
+//for this we will be returning a vector integer pointer
 
-}
-
-int height(BinaryTreeNode<int>* root)
+vector<int>* getPath(BinaryTreeNode<int>* root, int data)
 {
-    // Write our code here
-    if(root==NULL)
-        return 0;
+   if(root==NULL)
+        return NULL;
+    if(root->data == data)
+    {
+        vector<int>* output = new vector<int>();
+        output->push_back(root->data);
+        return output;
+    }
+    //when not equal to data. Since binary tree, we can go in one direction only
     
-    int left = 1+height(root->left); //1 corresponds to the root
-    int right = 1+height(root->right); //1 corresponds to the root
-    if(left>right)
-        return left;
+    if(root->data>data)
+    {
+        vector<int>* leftOutput = getPath(root->left,data);
+        if(leftOutput!=NULL)
+        {
+            leftOutput->push_back(root->data);
+            return leftOutput;
+        }
+    }
     else
-        return right;
+    {
+        vector<int>* rightOutput = getPath(root->right,data);
+        if(rightOutput!=NULL)
+        {
+            rightOutput->push_back(root->data);
+            return rightOutput;
+        }
+    }
 }
-
 
 
 int main()
 {   // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
+    // 4 2 6 1 3 5 7 -1 -1 -1 -1 -1 -1 -1 -1
+    //4 2 6 1 30 5 7 -1 -1 -1 -1 -1 -1 -1 -1
     BinaryTreeNode<int>* root = takeInputLevelWise();
     printLevelWise(root);
-    cout<<"Number of Nodes "<< numNodes(root);
-    
+    vector<int>* output = getPath(root,8);
+    for(int i =0;i<output->size();i++)
+    {
+        cout<<output->at(i)<<endl;
+    }
+    delete output;//dynamically allocated vector should be deleted
+    cout<<endl;
+ 
     delete root;
 }
-
 

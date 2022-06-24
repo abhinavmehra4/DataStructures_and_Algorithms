@@ -2,6 +2,8 @@
 #include "BinaryTreeNode.h"
 #include<queue>
 #include<vector>
+#include<algorithm>
+#include<climits>
 using namespace std;
 
 BinaryTreeNode<int>* takeInputLevelWise()
@@ -74,38 +76,59 @@ void printLevelWise(BinaryTreeNode<int> *root) {
     }
 }
 
-int numNodes(BinaryTreeNode<int>* root)
+//for this we will be returning a vector integer pointer
+
+vector<int>* getRootToNodePath(BinaryTreeNode<int>* root, int data)
 {
     if(root==NULL)
-        return 0;
-    return 1 + ( numNodes(root->left) + numNodes(root->right));
-    
+        return NULL;
+    if(root->data==data)
+    {
+        vector<int>* output = new vector<int>();
+        output->push_back(root->data);
+        return output;
+    }
+    vector<int>* leftOutput = getRootToNodePath(root->left,data);
+    if(leftOutput!=NULL)
+    {
+         leftOutput->push_back(root->data);
+         return leftOutput;
+    }
+    vector<int>* rightOutput = getRootToNodePath(root->right,data);
+    if(rightOutput!=NULL)
+    {
+        rightOutput->push_back(root->data);
+        return rightOutput;
+    }
+    else{
+        return NULL; //this is the case when we checked left subtree and right subtree and there was not the node we were looking for in the left or right
+    }
+    /*
+    if in an entire subtree the node which we are looking for is not in the left subtree, at the leaf nodes, NULL is 
+    returned.This NULL will cascade upwards all the way to root node of the tree with a NULL vector that is getting
+    pushed_back into the vector after every recursive call completion.
+
+    Now that left subtree is done, we move to the right subtree and the process starts all over again until we find the
+    node which we are looking for
+    */
 
 }
-
-int height(BinaryTreeNode<int>* root)
-{
-    // Write our code here
-    if(root==NULL)
-        return 0;
-    
-    int left = 1+height(root->left); //1 corresponds to the root
-    int right = 1+height(root->right); //1 corresponds to the root
-    if(left>right)
-        return left;
-    else
-        return right;
-}
-
 
 
 int main()
 {   // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
+    // 4 2 6 1 3 5 7 -1 -1 -1 -1 -1 -1 -1 -1
+    //4 2 6 1 30 5 7 -1 -1 -1 -1 -1 -1 -1 -1
     BinaryTreeNode<int>* root = takeInputLevelWise();
     printLevelWise(root);
-    cout<<"Number of Nodes "<< numNodes(root);
-    
+    vector<int>* output = getRootToNodePath(root,8);
+    for(int i =0;i<output->size();i++)
+    {
+        cout<<output->at(i)<<endl;
+    }
+    delete output;//dynamically allocated vector should be deleted
+    cout<<endl;
+ 
     delete root;
 }
-
 

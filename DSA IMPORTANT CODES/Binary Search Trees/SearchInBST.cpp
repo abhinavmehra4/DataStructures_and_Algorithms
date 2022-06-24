@@ -74,37 +74,25 @@ void printLevelWise(BinaryTreeNode<int> *root) {
     }
 }
 
-int numNodes(BinaryTreeNode<int>* root)
+bool searchInBST(BinaryTreeNode<int>*root, int k)
 {
     if(root==NULL)
-        return 0;
-    return 1 + ( numNodes(root->left) + numNodes(root->right));
+        return false;
     
-
-}
-
-int height(BinaryTreeNode<int>* root)
-{
-    // Write our code here
-    if(root==NULL)
-        return 0;
+    if(root->data==k)
+        return true;
     
-    int left = 1+height(root->left); //1 corresponds to the root
-    int right = 1+height(root->right); //1 corresponds to the root
-    if(left>right)
-        return left;
-    else
-        return right;
+    if(root->data>k)
+        return searchInBST(root->left,k);
+    else 
+        return searchInBST(root->right,k);
 }
-
-
 
 int main()
 {   // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
     BinaryTreeNode<int>* root = takeInputLevelWise();
     printLevelWise(root);
-    cout<<"Number of Nodes "<< numNodes(root);
-    
+   
     delete root;
 }
 

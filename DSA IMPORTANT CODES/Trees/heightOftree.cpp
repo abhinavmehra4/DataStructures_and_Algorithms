@@ -65,12 +65,18 @@ int getHeight(TreeNode<int>* root)
 {   
     if(root==NULL)
         return 0;
-    int height=1;
+    //int height=1; //this corresponds to the root
+	int max = 1;
     for(int i =0;i<root->children.size();i++)
     {
-        height+=getHeight(root->children[i]);
+        int height =1;
+        if(root->children[i]!=NULL)
+        {  
+            height+=getHeight(root->children[i]);
+        }
+        max=max>height?max:height;
     }
-    return height;
+    return max;
 }
 void deleteTree(TreeNode<int>* root) //similaar to postorder traversal
 {
