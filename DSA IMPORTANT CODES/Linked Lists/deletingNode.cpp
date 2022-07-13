@@ -65,6 +65,7 @@ Node* deleteNode(Node* head, int i)
         temp=temp->next;
         count++;
     }
+    //this step is for deleting
     if(temp!=NULL)
     {
         Node* a = temp->next;

@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std;
+
 class Node
 {
 public:
@@ -12,7 +12,25 @@ public:
 	}
 };
 
-
+using namespace std;
+int findNode(Node *head, int n){
+    // Write your code here.
+    Node* temp = head;
+    
+    int count=0;
+    while(temp!=NULL)
+    {
+        if(temp->data==n)
+        {
+            return count;
+        }
+        temp=temp->next;
+        count++;
+    }
+    
+    return -1;
+    
+}
 Node *takeinput()
 {
 	int data;
@@ -36,18 +54,6 @@ Node *takeinput()
 	return head;
 }
 
-int length(Node *head)
-{
-    //Write your code here
-    int count=0;
-    while(head!=NULL)
-    {
-        head=head->next;
-        count++;
-    }
-    return count;
-}
-
 int main()
 {
 	int t;
@@ -55,7 +61,8 @@ int main()
 	while (t--)
 	{
 		Node *head = takeinput();
-		cout << length(head) << endl;
+		int val;
+		cin >> val;
+		cout << findNode(head, val) << endl;
 	}
-	return 0;
 }

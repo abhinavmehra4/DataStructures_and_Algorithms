@@ -1,9 +1,10 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
-void print(int** edges,int n,int sv,bool* visited)//sv-starting verte
+void printDFS(int** edges,int n,int sv,bool* visited)//sv-starting verte
 {
-    cout<<sv<<endl;
+    cout<<sv<<" ";
     visited[sv]=true;//when vertices is visited, make it true
     for(int i=0;i<n;i++)
     {   
@@ -14,13 +15,74 @@ void print(int** edges,int n,int sv,bool* visited)//sv-starting verte
         if(edges[sv][i]==1){
             if(visited[i])
                 continue; //if vertices is already visited, skip it
-            print(edges,n,i,visited);
+            printDFS(edges,n,i,visited);
         }
     }
+    
 }
+
+void printBFS(int** edges,int n,int sv,bool* visited)
+{
+    queue<int> pendingVertices;
+    pendingVertices.push(sv);
+    visited[sv]=true;
+    while(!pendingVertices.empty())
+    {
+        int currentVertex = pendingVertices.front();
+        pendingVertices.pop();
+        cout<<currentVertex<<" ";
+        for(int i =0;i<n;i++)
+        {
+            if(i==currentVertex)
+                continue;
+            if(edges[currentVertex][i]==true && !visited[i])
+            {
+                pendingVertices.push(i);
+                visited[i]=true;
+            }
+        }
+
+    }
+}
+
+void DFS(int** edges, int n)
+{
+    bool* visited = new bool[n]; //keeps track of all the visited vertices
+    for(int i =0;i<n;i++)
+    {
+        visited[i]=false;
+    }
+
+    for(int i=0;i<n;i++)
+    {
+        if(!visited[i])
+                printDFS(edges,n,i,visited);
+
+    }
+    delete[] visited;
+    
+}
+
+void BFS(int** edges, int n)
+{
+    bool* visited = new bool[n]; //keeps track of all the visited vertices
+    for(int i =0;i<n;i++)
+    {
+        visited[i]=false;
+    }
+
+    for(int i=0;i<n;i++)
+    {
+        if(!visited[i])
+                printBFS(edges,n,i,visited);
+
+    }
+    delete[] visited;
+}
+
 int main()
 {
-    int n,e;
+    int n,e; //n-number of vertices, e-number of edges
     cin>>n>>e;
     //creating the Adjacency matrix of nxn dynamically and initializing it with 0
 
@@ -42,11 +104,16 @@ int main()
         edges[f][s]=1;
         edges[s][f]=1;
     }
-    bool* visited = new bool[n]; //keeps track of all the visited vertices
-    for(int i =0;i<n;i++)
+    
+    cout<<endl<<"DFS"<<endl;
+    DFS(edges,n);
+    cout<<"BFS"<<endl;
+    BFS(edges,n);
+
+    for(int i=0;i<n;i++)
     {
-        visited[i]=false;
+        delete[] edges[i];
     }
-    print(edges,n,0,visited);//we take starting vertex as 0
+    delete edges;
     return 0;
 }

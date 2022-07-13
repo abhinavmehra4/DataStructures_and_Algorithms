@@ -75,7 +75,10 @@ void placeNqueens(int n ){
 }
 
 int main()
-{
-    placeNqueens(4);
+{   
+    int n ;
+    cout<<"Enter the value of 'n'"<<endl;
+    cin>>n;
+    placeNqueens(n);
     return 0;
 }

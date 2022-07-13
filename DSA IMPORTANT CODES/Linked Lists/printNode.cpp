@@ -1,5 +1,5 @@
 #include <iostream>
-using namespace std;
+
 class Node
 {
 public:
@@ -12,6 +12,7 @@ public:
 	}
 };
 
+using namespace std;
 
 Node *takeinput()
 {
@@ -36,16 +37,24 @@ Node *takeinput()
 	return head;
 }
 
-int length(Node *head)
+
+void printIthNode(Node *head, int i)
 {
     //Write your code here
-    int count=0;
-    while(head!=NULL)
+     Node* temp = head;
+    int count =0;
+    while(temp)
     {
-        head=head->next;
+        if(i==count)
+        {
+            cout<< temp->data<<endl;
+            return;
+        }
+        
         count++;
+        temp=temp->next;
     }
-    return count;
+    
 }
 
 int main()
@@ -55,7 +64,10 @@ int main()
 	while (t--)
 	{
 		Node *head = takeinput();
-		cout << length(head) << endl;
+		int pos;
+		cin >> pos;
+		printIthNode(head, pos);
+		cout << endl;
 	}
 	return 0;
 }

@@ -108,4 +108,107 @@ int main()
     delete root;
 }
 
+/*
 
+/**********************************************************
+
+	Following are the Binary Tree Node class structure and
+	the Node class structure
+
+	template <typename T>
+	class BinaryTreeNode {
+    	public: 
+    	T data;
+    	BinaryTreeNode<T> *left;
+    	BinaryTreeNode<T> *right;
+
+    	BinaryTreeNode(T data) {
+        	this->data = data;
+        	left = NULL;
+        	right = NULL;
+    	}
+	};
+
+	template <typename T>
+	class Node {
+		public:
+    	T data;
+    	Node<T> *next;
+    	Node(T data) {
+        	this->data=data;
+        	this->next=NULL;
+    	}
+	}:
+
+***********************************************************/
+/*
+#include<vector>
+#include<queue>
+vector<Node<int>*> constructLinkedListForEachLevel(BinaryTreeNode<int> *root) {
+    // Write your code here
+    vector<Node<int>*> temp_vector;
+    if(root==NULL) //in case the root is NULL
+    {
+        temp_vector.push_back(NULL);
+        return temp_vector;
+    }
+    
+    queue<BinaryTreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    pendingNodes.push(NULL);
+    Node<int>* head=NULL;
+    Node<int>* tail=NULL;
+    while(pendingNodes.size()!=0)
+    {
+        BinaryTreeNode<int>*front = pendingNodes.front();
+        pendingNodes.pop();
+        
+        if(front==NULL)
+        {	
+            tail->next=NULL;
+            if(pendingNodes.size()==0)
+            {
+                break;
+            }
+            else
+            {
+                pendingNodes.push(NULL);
+                head=NULL;
+                tail=NULL;
+            }
+               
+        }
+        else
+        {
+        	Node<int>* node = new Node<int>(front->data);  
+            
+        
+        
+        if(head==NULL and tail==NULL)
+        {
+            
+            head = node;
+            tail = node;
+            temp_vector.push_back(head);
+            
+        }
+        else if(head!=NULL && tail!=NULL)
+        {
+            tail->next=node;
+            tail=node;
+            
+        }
+        
+        if(front->left!=NULL)
+            pendingNodes.push(front->left);
+        else if(front->right!=NULL)
+            pendingNodes.push(front->right);
+        
+    }
+    
+    }
+    return temp_vector;
+    //remember to push the head into the vector everytime the linked list is fully linked
+}
+
+*/
